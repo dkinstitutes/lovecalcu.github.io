@@ -417,6 +417,7 @@ nav ul li ul li a {
   text-decoration: none;
 }
 
-a{
+.copyright{
   text-decoration: none;
+    color: white;
 }
