@@ -409,7 +409,7 @@ nav ul li ul li a {
   padding-left: 20px;
   float: left;
   line-height: 70px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: 1.4em;
 }
 
