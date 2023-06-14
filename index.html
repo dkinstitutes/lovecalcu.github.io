@@ -150,23 +150,13 @@
     <script>
       let deferredPrompt;
     
-      // Check if the app is already installed when the page loads
-      window.addEventListener('load', () => {
-        if (!isAppInstalled()) {
-          showInstallButton();
-        } else {
-          showNotification('App Already Installed');
-        }
-      });
-    
-      // Listen for the beforeinstallprompt event
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
         deferredPrompt = event;
     
         // Show the install button if the app isn't already installed
         if (!isAppInstalled()) {
-          showInstallButton();
+          document.getElementById('installButton').style.display = 'block';
         } else {
           showNotification('App Already Installed');
         }
@@ -192,16 +182,16 @@
     
       // Check if the app is already installed
       function isAppInstalled() {
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+          return true; // The app is already installed
+        }
+    
+        // Check if the app is installed using older methods
+        if (window.matchMedia('(display-mode: fullscreen)').matches) {
           return true; // The app is already installed
         }
     
         return false; // The app is not installed
-      }
-    
-      // Show the install button
-      function showInstallButton() {
-        document.getElementById('installButton').style.display = 'block';
       }
     
       // Show notification to the user
@@ -209,7 +199,8 @@
         // Replace this with your actual notification implementation
         alert(message);
       }
-    </script>    
+    </script>
+
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
   <script  src="./script.js"></script>
