@@ -149,22 +149,17 @@
     </div>
     <script>
       let deferredPrompt;
-      let isAppInstalled = false;
     
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
         deferredPrompt = event;
     
         // Show the install button if the app isn't already installed
-        if (!isAppInstalled) {
+        if (!isAppInstalled()) {
           document.getElementById('installButton').style.display = 'block';
+        } else {
+          showNotification('App Already Installed');
         }
-      });
-    
-      window.addEventListener('appinstalled', () => {
-        // Mark the app as installed and display the notification
-        isAppInstalled = true;
-        showNotification('App Already Installed');
       });
     
       // Handle install button click
@@ -185,12 +180,27 @@
         }
       });
     
+      // Check if the app is already installed
+      function isAppInstalled() {
+        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+          return true; // The app is already installed
+        }
+    
+        // Check if the app is installed using older methods
+        if (window.matchMedia('(display-mode: fullscreen)').matches) {
+          return true; // The app is already installed
+        }
+    
+        return false; // The app is not installed
+      }
+    
       // Show notification to the user
       function showNotification(message) {
         // Replace this with your actual notification implementation
         alert(message);
       }
     </script>    
+
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
   <script  src="./script.js"></script>
