@@ -147,9 +147,11 @@
       </ul>
       </div>
     </div>
+    
     <script>
       let deferredPrompt;
       let isAppInstalled = false;
+      let isInstallButtonClicked = false;
     
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
@@ -167,6 +169,8 @@
     
       // Handle install button click
       document.getElementById('installButton').addEventListener('click', () => {
+        isInstallButtonClicked = true;
+    
         if (deferredPrompt) {
           deferredPrompt.prompt();
     
@@ -196,7 +200,11 @@
           window.matchMedia('(display-mode: fullscreen)').matches
         ) {
           isAppInstalled = true; // The app is already installed
-          showNotification('App Already Installed');
+          
+          // Show notification only if the install button hasn't been clicked yet
+          if (!isInstallButtonClicked) {
+            showNotification('App Already Installed');
+          }
         } else {
           document.getElementById('installButton').style.display = 'block';
         }
@@ -207,7 +215,8 @@
         // Replace this with your actual notification implementation
         alert(message);
       }
-    </script>           
+    </script>
+               
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
   <script  src="./script.js"></script>
