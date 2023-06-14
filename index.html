@@ -156,16 +156,13 @@
         deferredPrompt = event;
     
         // Check if the app is already installed
-        if (isAppInstalled()) {
-          showNotification('App Already Installed');
-        } else {
-          document.getElementById('installButton').style.display = 'block';
-        }
+        checkAppInstallation();
       });
     
       window.addEventListener('appinstalled', () => {
         // Mark the app as installed
         isAppInstalled = true;
+        showNotification('App Already Installed');
       });
     
       // Handle install button click
@@ -173,31 +170,36 @@
         if (deferredPrompt) {
           deferredPrompt.prompt();
     
-          deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('User accepted the install prompt');
-            } else {
-              console.log('User dismissed the install prompt');
-            }
-    
-            // Reset the deferred prompt
-            deferredPrompt = null;
-          });
+          deferredPrompt.userChoice
+            .then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+              } else {
+                console.log('User dismissed the install prompt');
+              }
+            })
+            .catch((error) => {
+              console.error('Error while prompting install:', error);
+            })
+            .finally(() => {
+              // Reset the deferred prompt
+              deferredPrompt = null;
+            });
         }
       });
     
       // Check if the app is already installed
-      function isAppInstalled() {
-        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
-          return true; // The app is already installed
+      function checkAppInstallation() {
+        if (
+          window.matchMedia('(display-mode: standalone)').matches ||
+          navigator.standalone ||
+          window.matchMedia('(display-mode: fullscreen)').matches
+        ) {
+          isAppInstalled = true; // The app is already installed
+          showNotification('App Already Installed');
+        } else {
+          document.getElementById('installButton').style.display = 'block';
         }
-    
-        // Check if the app is installed using older methods
-        if (window.matchMedia('(display-mode: fullscreen)').matches) {
-          return true; // The app is already installed
-        }
-    
-        return false; // The app is not installed
       }
     
       // Show notification to the user
@@ -205,7 +207,7 @@
         // Replace this with your actual notification implementation
         alert(message);
       }
-    </script>       
+    </script>           
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
   <script  src="./script.js"></script>
