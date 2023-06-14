@@ -91,6 +91,7 @@
   <a class="a2a_button_facebook_messenger"></a>
   </div>
   <!-- AddToAny END -->
+  <button id="installButton" style="display: none;" class="button">Install Now</button>
 
   <div style="
     width: 100%;
@@ -145,6 +146,51 @@
       </ul>
       </div>
     </div>
+    <script>
+      let deferredPrompt;
+    
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        deferredPrompt = event;
+    
+        // Show the install button if the app isn't already installed
+        if (!isAppInstalled()) {
+          document.getElementById('installButton').style.display = 'block';
+        }
+      });
+    
+      // Handle install button click
+      document.getElementById('installButton').addEventListener('click', () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+    
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            } else {
+              console.log('User dismissed the install prompt');
+            }
+    
+            // Reset the deferred prompt
+            deferredPrompt = null;
+          });
+        }
+      });
+    
+      // Check if the app is already installed
+      function isAppInstalled() {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+          return true; // The app is already installed
+        }
+    
+        // Check if the app is installed using older methods
+        if (navigator.standalone || window.matchMedia('(display-mode: fullscreen)').matches) {
+          return true; // The app is already installed
+        }
+    
+        return false; // The app is not installed
+      }
+    </script>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
