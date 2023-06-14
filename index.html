@@ -157,6 +157,8 @@
         // Show the install button if the app isn't already installed
         if (!isAppInstalled()) {
           document.getElementById('installButton').style.display = 'block';
+        } else {
+          showNotification('App Already Installed');
         }
       });
     
@@ -180,18 +182,24 @@
     
       // Check if the app is already installed
       function isAppInstalled() {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
+        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
           return true; // The app is already installed
         }
     
         // Check if the app is installed using older methods
-        if (navigator.standalone || window.matchMedia('(display-mode: fullscreen)').matches) {
+        if (window.matchMedia('(display-mode: fullscreen)').matches) {
           return true; // The app is already installed
         }
     
         return false; // The app is not installed
       }
-    </script>
+    
+      // Show notification to the user
+      function showNotification(message) {
+        // Replace this with your actual notification implementation
+        alert(message);
+      }
+    </script>    
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
