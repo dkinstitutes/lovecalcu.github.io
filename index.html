@@ -147,76 +147,50 @@
       </ul>
       </div>
     </div>
-    
     <script>
       let deferredPrompt;
       let isAppInstalled = false;
-      let isInstallButtonClicked = false;
     
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
         deferredPrompt = event;
     
-        // Check if the app is already installed
-        checkAppInstallation();
+        // Show the install button if the app isn't already installed
+        if (!isAppInstalled) {
+          document.getElementById('installButton').style.display = 'block';
+        }
       });
     
       window.addEventListener('appinstalled', () => {
-        // Mark the app as installed
+        // Mark the app as installed and display the notification
         isAppInstalled = true;
         showNotification('App Already Installed');
       });
     
       // Handle install button click
       document.getElementById('installButton').addEventListener('click', () => {
-        isInstallButtonClicked = true;
-    
         if (deferredPrompt) {
           deferredPrompt.prompt();
     
-          deferredPrompt.userChoice
-            .then((choiceResult) => {
-              if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-              } else {
-                console.log('User dismissed the install prompt');
-              }
-            })
-            .catch((error) => {
-              console.error('Error while prompting install:', error);
-            })
-            .finally(() => {
-              // Reset the deferred prompt
-              deferredPrompt = null;
-            });
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            } else {
+              console.log('User dismissed the install prompt');
+            }
+    
+            // Reset the deferred prompt
+            deferredPrompt = null;
+          });
         }
       });
-    
-      // Check if the app is already installed
-      function checkAppInstallation() {
-        if (
-          window.matchMedia('(display-mode: standalone)').matches ||
-          navigator.standalone ||
-          window.matchMedia('(display-mode: fullscreen)').matches
-        ) {
-          isAppInstalled = true; // The app is already installed
-          
-          // Show notification only if the install button hasn't been clicked yet
-          if (!isInstallButtonClicked) {
-            showNotification('App Already Installed');
-          }
-        } else {
-          document.getElementById('installButton').style.display = 'block';
-        }
-      }
     
       // Show notification to the user
       function showNotification(message) {
         // Replace this with your actual notification implementation
         alert(message);
       }
-    </script>
-               
+    </script>    
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
   <script  src="./script.js"></script>
