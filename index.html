@@ -86,29 +86,36 @@
       function displayAds() {
           // Replace with your AdSense ad code
           var adCode = `
-              <ins class="adsbygoogle"
-                   style="display:block"
-                   data-ad-client="ca-pub-5580564546196829"
-                   data-ad-slot="1767137575"
-                   data-ad-format="auto"
-                   data-full-width-responsive="true"
-              ></ins>
+              <div style="text-align: center;">
+                  <p style="font-weight: bold; font-size: 18px;">Advertisement</p>
+                  <ins class="adsbygoogle"
+                       style="display:block"
+                       data-ad-client="ca-pub-5580564546196829"
+                       data-ad-slot="1767137575"
+                       data-ad-format="auto"
+                       data-full-width-responsive="true"
+                  ></ins>
+              </div>
           `;
-
+  
           // Create a SweetAlert popup
           Swal.fire({
               html: adCode,
               showCloseButton: true, // Show a close button
               focusConfirm: false, // Prevent focusing on the "Try Again" button
+              customClass: {
+                  title: 'swal2-title', // Apply custom CSS class to the title
+              },
               onOpen: function() {
                   (adsbygoogle = window.adsbygoogle || []).push({});
               }
           });
       }
-
+  
       // Add event listener to the "Try Again" button using its id
       document.getElementById('try-again').addEventListener('click', displayAds);
   </script>
+  
       <!-- the install button -->
       <button id="installButton" class="download-button"><span><i class="fa fa-download"></i> Download</span></button>
       <div style="text-align: center;">
