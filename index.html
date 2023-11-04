@@ -80,7 +80,7 @@
         <p class="align-right"><button id="try-again">Try Again</button></p>
     </div>  
       <!-- the install button -->
-      <button id="installButton" class="download-button"><span>Install Now</span></button>
+      <button id="installButton" class="download-button"><span><i class="fa fa-download"></i> Download</span></button>
       <div style="text-align: center;">
         <small class="text-muted">Installable only in updated chrome browsers.</small>
         </div> 
@@ -146,9 +146,9 @@
       <hr>
       <h2>You might also like:</h2>
       <ul style="padding: 10px;">
-        <li><a href="https://fancynamer.com/">Fancynamer - Stylish Name Creator</a></li>
-        <li><a href="https://agecalcu.com/">Agecalcu - Calculate your age in seconds</a></li>
-        <li><a href="https://pubgfont.com/">pubgfont - Create stylish PUBG names</a></li>
+        <!-- <li><a href="https://fancynamer.com/">Fancynamer - Stylish Name Creator</a></li> -->
+        <li><a href="https://agecalcu.com/">Age Calculator</a></li>
+        <li><a href="https://pubgfont.com/">PUBG Name Generator</a></li>
       </ul>
       </div>
     </div>
@@ -163,8 +163,6 @@
         // Show the install button if the app isn't already installed
         if (!isAppInstalled()) {
           document.getElementById('installButton').style.display = 'block';
-        } else {
-          showNotification('App Already Installed');
         }
       });
     
@@ -189,23 +187,13 @@
       // Check if the app is already installed
       function isAppInstalled() {
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
-          return true; // The app is already installed
-        }
-    
-        // Check if the app is installed using older methods
-        if (window.matchMedia('(display-mode: fullscreen)').matches) {
-          return true; // The app is already installed
+          return true; // The app is already installed as a PWA
         }
     
         return false; // The app is not installed
       }
-    
-      // Show notification to the user
-      function showNotification(message) {
-        // Replace this with your actual notification implementation
-        alert(message);
-      }
     </script>
+    
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
   <script  src="./script.js"></script>
