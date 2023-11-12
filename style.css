@@ -94,8 +94,8 @@ button:active {
 }
 
 #warning {
-    color: red;
-    opacity: 0;
+    color: #C90043;
+    /* opacity: 0; */
 }
 
 #results {
