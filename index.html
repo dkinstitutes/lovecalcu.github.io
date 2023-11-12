@@ -225,8 +225,57 @@
     
         return false; // The app is not installed
       }
+      
+// Added Confatti
+      const defaults = {
+        spread: 360,
+        ticks: 100,
+        gravity: 0,
+        decay: 0.94,
+        startVelocity: 30,
+        shapes: ["heart"],
+        colors: ["FFC0CB", "FF69B4", "FF1493", "C71585"],
+      };
+  
+      function runConfetti() {
+        confetti({
+          ...defaults,
+          particleCount: 50,
+          scalar: 2,
+        });
+  
+        confetti({
+          ...defaults,
+          particleCount: 25,
+          scalar: 3,
+        });
+  
+        confetti({
+          ...defaults,
+          particleCount: 10,
+          scalar: 4,
+        });
+      }
+  
+      function showResults() {
+        const name1 = document.getElementById('name1').value.trim();
+        const name2 = document.getElementById('name2').value.trim();
+  
+        // Check if input fields are not empty
+        if (name1 !== '' && name2 !== '') {
+          // Your code to show the results
+  
+          // Run the confetti animation when the results are shown
+          runConfetti();
+        } else {
+          // Show a warning or handle the case where input fields are empty
+          alert('Please fill in both names before calculating.');
+        }
+      }
+  
+      document.getElementById('calculate').addEventListener('click', showResults);
     </script>
-    
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.12.0/tsparticles.confetti.bundle.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script async src="https://static.addtoany.com/menu/page.js"></script>
   <script  src="./script.js"></script>
