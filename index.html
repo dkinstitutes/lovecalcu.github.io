@@ -275,44 +275,38 @@
   
       document.getElementById('calculate').addEventListener('click', showResults);
       // Added new animation
-      // Function to trigger the confetti animation
-function triggerConfetti() {
-  const defaults = {
-    spread: 360,
-    ticks: 100,
-    gravity: 0,
-    decay: 0.94,
-    startVelocity: 30,
-    shapes: ["heart"],
-    colors: ["FFC0CB", "FF69B4", "FF1493", "C71585"],
-  };
+      document.getElementById("calculate").addEventListener("click", function() {
+    // Delay the confetti animation by 5 seconds (5000 milliseconds)
+    setTimeout(function() {
+      const defaults = {
+        spread: 360,
+        ticks: 100,
+        gravity: 0,
+        decay: 0.94,
+        startVelocity: 30,
+        shapes: ["heart"],
+        colors: ["FFC0CB", "FF69B4", "FF1493", "C71585"],
+      };
 
-  confetti({
-    ...defaults,
-    particleCount: 50,
-    scalar: 2,
+      confetti({
+        ...defaults,
+        particleCount: 50,
+        scalar: 2,
+      });
+
+      confetti({
+        ...defaults,
+        particleCount: 25,
+        scalar: 3,
+      });
+
+      confetti({
+        ...defaults,
+        particleCount: 10,
+        scalar: 4,
+      });
+    }, 5000); // 5 seconds delay
   });
-
-  confetti({
-    ...defaults,
-    particleCount: 25,
-    scalar: 3,
-  });
-
-  confetti({
-    ...defaults,
-    particleCount: 10,
-    scalar: 4,
-  });
-}
-
-// Check if the element with ID "love-results" exists
-const loveResults = document.getElementById("love-results");
-if (loveResults) {
-  // Trigger the confetti animation
-  triggerConfetti();
-}
-
     </script>
   <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.12.0/tsparticles.confetti.bundle.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
